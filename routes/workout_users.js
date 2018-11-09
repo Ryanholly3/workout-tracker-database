@@ -21,7 +21,7 @@ router.get('/:id', (req, res, next) => {
           next()
         } res.json({ workout_user: workout_user[0] })
   		})
-  } next()
+  }
 })
 
 router.post('/', (req, res, next) => {
