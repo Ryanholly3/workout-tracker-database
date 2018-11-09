@@ -3,18 +3,23 @@ const app = express()
 const port = process.env.PORT || 3030
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const usersPath = requite('./routes/users')
+const usersPath = require('./routes/workout_users')
+const swimsPath = require('./routes/swims')
+const bikesPath = require('./routes/bikes')
+const runsPath = require('./routes/runs')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
 app.get('/', (req, res) => {
-	res.send('🐻🐻🐻🐻🐻🐻🐻')
+	res.send('Workout Tracker API!')
 })
 
-app.use('/users', usersPath)
-
+app.use('/workout_users', usersPath)
+app.use('/workout_users/swims', swimsPath)
+app.use('/workout_users/bikes', bikesPath)
+app.use('/workout_users/runs', runsPath)
 
 // error handling
 app.use(notFound)
