@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         table.integer('distance');
         table.integer('difficulty');
         table.string('notes', 200);
-        table.integer('user_id').references('user.id').unsigned().onDelete('cascade');
+        table.integer('workout_users_id').references('workout_users.id').unsigned().onDelete('cascade');
     });
 };
 
