@@ -38,7 +38,9 @@ router.put('/:id', (req, res, next) => {
     	.update(body)
     	.returning('*')
     	.then(swim => {
-        res.json({ swim: swim[0] });
+        if(!swim.length){
+          next()
+        } res.json({ swim: swim[0] });
     });
 });
 
@@ -49,7 +51,9 @@ router.delete('/:id', (req, res, next) => {
 			.del()
     	.returning('*')
     	.then(swim => {
-        res.json({ swim: swim[0] });
+        if(!swim.length){
+          next()
+        } res.json({ swim: swim[0] });
     });
 });
 

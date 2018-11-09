@@ -42,7 +42,9 @@ router.put('/:id', (req, res, next) => {
     	.update(body)
     	.returning('*')
     	.then(workout_user => {
-        res.json({ workout_user: workout_user[0] });
+        if(!workout_user.length){
+          next()
+        } res.json({ workout_user: workout_user[0] });
     });
 });
 
@@ -53,7 +55,9 @@ router.delete('/:id', (req, res, next) => {
 			.del()
     	.returning('*')
     	.then(workout_user => {
-        res.json({ workout_user: workout_user[0] });
+        if(!workout_user.length){
+          next()
+        } res.json({ workout_user: workout_user[0] });
     });
 });
 

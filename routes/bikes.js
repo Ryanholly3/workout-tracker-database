@@ -38,7 +38,9 @@ router.put('/:id', (req, res, next) => {
     	.update(body)
     	.returning('*')
     	.then(bike => {
-        res.json({ bike: bike[0] });
+        if(!bike.length){
+          next()
+        } res.json({ bike: bike[0] });
     });
 });
 
@@ -49,7 +51,9 @@ router.delete('/:id', (req, res, next) => {
 			.del()
     	.returning('*')
     	.then(bike => {
-        res.json({ bike: bike[0] });
+        if(!bike.length){
+          next()
+        } res.json({ bike: bike[0] });
     });
 });
 

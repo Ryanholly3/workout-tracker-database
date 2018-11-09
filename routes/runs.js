@@ -38,7 +38,9 @@ router.put('/:id', (req, res, next) => {
     	.update(body)
     	.returning('*')
     	.then(run => {
-        res.json({ run: run[0] });
+        if(!run.length){
+          next()
+        } res.json({ run: run[0] });
     });
 });
 
@@ -49,7 +51,9 @@ router.delete('/:id', (req, res, next) => {
 			.del()
     	.returning('*')
     	.then(run => {
-        res.json({ run: run[0] });
+        if(!run.length){
+          next()
+        } res.json({ run: run[0] });
     });
 });
 
