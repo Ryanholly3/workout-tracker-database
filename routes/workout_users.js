@@ -17,7 +17,9 @@ router.get('/:id', (req, res, next) => {
     knex('workout_users')
       .where('id', id)
       .then(workout_user => {
-  		  res.json({ workout_user: workout_user[0] })
+        if(!workout_user.length){
+          next()
+        } res.json({ workout_user: workout_user[0] })
   		})
   } next()
 })

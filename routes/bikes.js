@@ -14,7 +14,9 @@ router.get('/:id', (req, res) => {
 	knex('bike')
     .where('id', id)
     .then(bike => {
-		  res.json({ bike: bike[0] })
+      if(!bike.length){
+        next()
+      } res.json({ bike: bike[0] })
 		})
 })
 

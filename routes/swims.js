@@ -14,7 +14,9 @@ router.get('/:id', (req, res) => {
 	knex('swim')
     .where('id', id)
     .then(swim => {
-		  res.json({ swim: swim[0] })
+      if(!swim.length){
+        next()
+      } res.json({ swim: swim[0] })
 		})
 })
 
