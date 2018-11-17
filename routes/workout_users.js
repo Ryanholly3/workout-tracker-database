@@ -2,8 +2,13 @@ const express = require('express')
 const router = express.Router()
 const knex = require('../db/connection')
 
+
+//Bug in JOIN!!!!!!!!!!!!!!!!!!!!
 router.get('/', (req, res) => {
 	knex('workout_users')
+		.orderBy('workout_users.id', 'asc')
+		.from('workout_users')
+		.innerJoin('swim', 'swim.workout_users_id', 'workout_users.id')
     .then(workout_users => {
 		  res.json({ workout_users })
 		})
