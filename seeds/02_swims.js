@@ -9,42 +9,42 @@ exports.seed = function(knex, Promise) {
           date: "11/6/18",
           distance: 5000,
           difficulty: 10,
-          notes: "ryan - terrible run...",
+          notes: "ryan - terrible swim...",
           workout_users_id: 1
         }, {
           id: 2,
           date: "11/7/18",
           distance: 6000,
           difficulty: 4,
-          notes: "ryan - Great run...",
+          notes: "ryan - Great swim...",
           workout_users_id: 1
         }, {
           id: 3,
           date: "11/6/18",
           distance: 3500,
           difficulty: 6,
-          notes: "logan - Great run...",
+          notes: "logan - Great swim...",
           workout_users_id: 2
         }, {
           id: 4,
           date: "11/7/18",
           distance: 4000,
           difficulty: 5,
-          notes: "logan - Terrible run...",
+          notes: "logan - Terrible swim...",
           workout_users_id: 2
         }, {
           id: 5,
           date: "11/6/18",
           distance: 4000,
           difficulty: 10,
-          notes: "priscilla - Great run...",
+          notes: "priscilla - Great swim...",
           workout_users_id: 3
         }, {
           id: 6,
           date: "11/7/18",
           distance: 4000,
           difficulty: 4,
-          notes: "priscilla - alright run...",
+          notes: "priscilla - alright swim...",
           workout_users_id: 3
         }
       ]);

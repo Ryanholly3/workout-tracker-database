@@ -24,6 +24,51 @@ router.get('/:id', (req, res, next) => {
   }
 })
 
+router.get('/:id/swims', (req, res, next) => {
+  const id = req.params.id;
+  const intCheck = parseInt(id);
+
+  if(typeof intCheck === 'number'){
+    knex('swim')
+      .where('workout_users_id', id)
+      .then(workout_user_swims => {
+        if(!workout_user_swims.length){
+          next()
+        } res.json({ workout_user_swims })
+  		})
+  }
+})
+
+router.get('/:id/bikes', (req, res, next) => {
+  const id = req.params.id;
+  const intCheck = parseInt(id);
+
+  if(typeof intCheck === 'number'){
+    knex('bike')
+      .where('workout_users_id', id)
+      .then(workout_user_bikes => {
+        if(!workout_user_bikes.length){
+          next()
+        } res.json({ workout_user_bikes })
+  		})
+  }
+})
+
+router.get('/:id/runs', (req, res, next) => {
+  const id = req.params.id;
+  const intCheck = parseInt(id);
+
+  if(typeof intCheck === 'number'){
+    knex('run')
+      .where('workout_users_id', id)
+      .then(workout_user_runs => {
+        if(!workout_user_runs.length){
+          next()
+        } res.json({ workout_user_runs })
+  		})
+  }
+})
+
 router.post('/', (req, res, next) => {
     const body = req.body;
     knex('workout_users')

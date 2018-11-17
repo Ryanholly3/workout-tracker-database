@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/workout_users', usersPath)
-app.use('/workout_users/swims', swimsPath)
-app.use('/workout_users/bikes', bikesPath)
-app.use('/workout_users/runs', runsPath)
+app.use('/swims', swimsPath)
+app.use('/bikes', bikesPath)
+app.use('/runs', runsPath)
 
 // error handling
 app.use(notFound)
