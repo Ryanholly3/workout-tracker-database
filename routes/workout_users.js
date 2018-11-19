@@ -9,40 +9,40 @@ router.get('/', (req, res) => {
 	function getUsers(){
 		return knex('workout_users')
 			.select('*')
-			.first()
 	}
 
-	function getSwimsForUser(){
-		return knex('workout_users')
-		.innerJoin('swim', 'swim.workout_users_id', 'workout_users.id')
-		// .where('workout_users.id', 'workout_users_id')
+	function getSwimsForUser(users){
+		return knex('swim')
+			.select(knex.raw('swim.id as swim_id, swim.date, swim.distance, swim.difficulty, swim.notes'))
+			.innerJoin('workout_users', 'workout_users.id', 'swim.workout_users_id')
+			.whereIn('swim.workout_users_id', [users.id])
 	}
 
-	function getBikesForUser(){
-		return knex('workout_users')
-			.innerJoin('bike', 'bike.workout_users_id', 'workout_users.id')
+	function getBikesForUser(users){
+		return knex('bike')
+			.select(knex.raw('bike.id as bike_id, bike.date, bike.distance, bike.difficulty, bike.notes'))
+			.innerJoin('workout_users', 'workout_users.id', 'bike.workout_users_id')
+			.whereIn('bike.workout_users_id', [users.id])
 	}
 
-	function getRunsForUser(){
-		return knex('workout_users')
-			.innerJoin('run', 'run.workout_users_id', 'workout_users.id')
+	function getRunsForUser(users){
+		return knex('run')
+			.select(knex.raw('run.id as run_id, run.date, run.distance, run.difficulty, run.notes'))
+			.innerJoin('workout_users', 'workout_users.id', 'run.workout_users_id')
+			.whereIn('run.workout_users_id', [users.id])
 	}
 
 	function getUsersWithWorkouts(){
-		return Promise.all ([
-			getUsers(),
-			getSwimsForUser(),
-			getBikesForUser(),
-			getRunsForUser()
-		]).then(function(results) {
-			let [user, swims, bikes, runs] = results
-			user.swims = swims;
-			user.bikes = bikes;
-			user.runs = runs;
-			return user
-		}).then((users)=>{
-			res.json({ users })
-		})
+		return getUsers()
+			.then(function(users){
+				return Promise.all(users.map(async (user)=> {
+						user.swims = await getSwimsForUser(user)
+						user.bikes = await getBikesForUser(user)
+						user.runs = await getRunsForUser(user)
+						return user
+					})
+				)
+			}).then(users => res.json({ users }))
 	}
 	getUsersWithWorkouts()
 })

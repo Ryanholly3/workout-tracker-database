@@ -3,6 +3,7 @@ const app = express()
 const port = process.env.PORT || 3030
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 const usersPath = require('./routes/workout_users')
 const swimsPath = require('./routes/swims')
 const bikesPath = require('./routes/bikes')
@@ -10,6 +11,7 @@ const runsPath = require('./routes/runs')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(morgan('dev'))
 app.use(cors())
 
 app.get('/', (req, res) => {
