@@ -11,25 +11,25 @@ router.get('/', (req, res) => {
 			.select('*')
 	}
 
-	function getSwimsForUser(users){
+	function getSwimsForUser(user){
 		return knex('swim')
 			.select(knex.raw('swim.id as swim_id, swim.date, swim.distance, swim.difficulty, swim.notes'))
 			.innerJoin('workout_users', 'workout_users.id', 'swim.workout_users_id')
-			.whereIn('swim.workout_users_id', [users.id])
+			.whereIn('swim.workout_users_id', [user.id])
 	}
 
-	function getBikesForUser(users){
+	function getBikesForUser(user){
 		return knex('bike')
 			.select(knex.raw('bike.id as bike_id, bike.date, bike.distance, bike.difficulty, bike.notes'))
 			.innerJoin('workout_users', 'workout_users.id', 'bike.workout_users_id')
-			.whereIn('bike.workout_users_id', [users.id])
+			.whereIn('bike.workout_users_id', [user.id])
 	}
 
-	function getRunsForUser(users){
+	function getRunsForUser(user){
 		return knex('run')
 			.select(knex.raw('run.id as run_id, run.date, run.distance, run.difficulty, run.notes'))
 			.innerJoin('workout_users', 'workout_users.id', 'run.workout_users_id')
-			.whereIn('run.workout_users_id', [users.id])
+			.whereIn('run.workout_users_id', [user.id])
 	}
 
 	function getUsersWithWorkouts(){
