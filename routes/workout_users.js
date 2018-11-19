@@ -5,13 +5,46 @@ const knex = require('../db/connection')
 
 //Bug in JOIN!!!!!!!!!!!!!!!!!!!!
 router.get('/', (req, res) => {
-	knex('workout_users')
-		.orderBy('workout_users.id', 'asc')
-		.from('workout_users')
+
+	function getUsers(){
+		return knex('workout_users')
+			.select('*')
+			.first()
+	}
+
+	function getSwimsForUser(){
+		return knex('workout_users')
 		.innerJoin('swim', 'swim.workout_users_id', 'workout_users.id')
-    .then(workout_users => {
-		  res.json({ workout_users })
+		// .where('workout_users.id', 'workout_users_id')
+	}
+
+	function getBikesForUser(){
+		return knex('workout_users')
+			.innerJoin('bike', 'bike.workout_users_id', 'workout_users.id')
+	}
+
+	function getRunsForUser(){
+		return knex('workout_users')
+			.innerJoin('run', 'run.workout_users_id', 'workout_users.id')
+	}
+
+	function getUsersWithWorkouts(){
+		return Promise.all ([
+			getUsers(),
+			getSwimsForUser(),
+			getBikesForUser(),
+			getRunsForUser()
+		]).then(function(results) {
+			let [user, swims, bikes, runs] = results
+			user.swims = swims;
+			user.bikes = bikes;
+			user.runs = runs;
+			return user
+		}).then((users)=>{
+			res.json({ users })
 		})
+	}
+	getUsersWithWorkouts()
 })
 
 router.get('/:id', (req, res, next) => {
